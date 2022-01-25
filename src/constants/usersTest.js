@@ -4,3 +4,5 @@ export default [
     'jean.limbert@billed.com',
     'joanna.binet@billed.com'
 ]
+
+export const extensionsadmited = ['jpg', 'png', 'jpeg']

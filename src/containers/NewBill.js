@@ -1,5 +1,6 @@
 import { ROUTES_PATH } from '../constants/routes.js'
 import Logout from "./Logout.js"
+import { extensionsadmited } from '../constants/usersTest.js'
 
 export default class NewBill {
   constructor({ document, onNavigate, store, localStorage }) {
@@ -20,12 +21,16 @@ export default class NewBill {
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
     const filePath = e.target.value.split(/\\/g)
     const fileName = filePath[filePath.length-1]
+    let extension = fileName.split('.').pop().toLowerCase()
     const formData = new FormData()
     const email = JSON.parse(localStorage.getItem("user")).email
     formData.append('file', file)
     formData.append('email', email)
-
-    this.store
+    if(extensionsadmited.find(item => item.toString() == extension.toString()) == undefined){
+      alert('Attention, le fichier doit être une image')
+      this.document.querySelector(`input[data-testid="file"]`).value = ''
+    } else {
+      this.store
       .bills()
       .create({
         data: formData,
@@ -39,6 +44,7 @@ export default class NewBill {
         this.fileUrl = fileUrl
         this.fileName = fileName
       }).catch(error => console.error(error))
+    }
   }
   handleSubmit = e => {
     e.preventDefault()

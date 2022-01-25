@@ -1,8 +1,9 @@
 import VerticalLayout from './VerticalLayout.js'
 import ErrorPage from "./ErrorPage.js"
 import LoadingPage from "./LoadingPage.js"
-
+import { formatDate } from "../app/format.js"
 import Actions from './Actions.js'
+import { bills } from '../fixtures/bills.js'
 
 const row = (bill) => {
   return (`
@@ -20,6 +21,11 @@ const row = (bill) => {
   }
 
 const rows = (data) => {
+  if (data !== undefined && data !== null && data !== bills) {
+    data.map(bill => bill.date.replaceAll('-', ''))  
+    data.sort((a, b) => a.date > b.date ? -1 : 1)
+    data.map(bill => bill.date = formatDate(bill.date))
+  }
   return (data && data.length) ? data.map(bill => row(bill)).join("") : ""
 }
 
