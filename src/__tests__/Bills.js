@@ -92,7 +92,7 @@ describe("Given I am a user connected as Admin", () => {
       store.get.mockImplementationOnce(() =>
         Promise.reject(new Error("Erreur 404"))
       )
-      const html = BillsUI({ error: "Errseur 404" })
+      const html = BillsUI({ error: "Erreur 404" })
       document.body.innerHTML = html
       const message = await screen.getByText(/Erreur 404/)
       expect(message).toBeTruthy()
