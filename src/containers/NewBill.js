@@ -48,7 +48,6 @@ export default class NewBill {
   }
   handleSubmit = e => {
     e.preventDefault()
-    console.log('e.target.querySelector(`input[data-testid="datepicker"]`).value', e.target.querySelector(`input[data-testid="datepicker"]`).value)
     const email = JSON.parse(this.localStorage.getItem("user")).email
     const bill = {
       email,
@@ -59,8 +58,8 @@ export default class NewBill {
       vat: e.target.querySelector(`input[data-testid="vat"]`).value,
       pct: parseInt(e.target.querySelector(`input[data-testid="pct"]`).value) || 20,
       commentary: e.target.querySelector(`textarea[data-testid="commentary"]`).value,
-      fileUrl: this.fileUrl,
-      fileName: this.fileName,
+      fileUrl: this.fileUrl || '',
+      fileName: this.fileName || '',
       status: 'pending'
     }
     this.updateBill(bill)

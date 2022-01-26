@@ -1,3 +1,5 @@
+import { post } from "jquery"
+
 export const storeMock = {
     bills: function() {
         return new class {
@@ -13,7 +15,17 @@ export const storeMock = {
                     key: 'KEY'
                 }
             }
+            update = async ({data, selector}) => {
+                return await {
+                    data: data,
+                    selector: selector
+                }
+            }
         }
+    },
+    post: function(bill) {
+        console.log(bill)
+        return bill
     }
 }
 
