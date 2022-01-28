@@ -80,6 +80,16 @@ describe('Given i am connected as an employye on the bills page', () => {
 
 // test d'intégration de la fonctionnalité GET
 
+const errorHandler = async (errorCode) => {
+  store.get.mockImplementationOnce(() =>
+        Promise.reject(new Error("Erreur : " + errorCode))
+      )
+      const html = BillsUI({ error: `Erreur ${errorCode}`})
+      document.body.innerHTML = html
+      let regex = new RegExp(`Erreur ${errorCode}`)
+      return await screen.getByText(regex)
+}
+
 describe("Given I am a user connected as Admin", () => {
   describe("When I navigate to Dashboard", () => {
     test("fetches bills from mock API GET", async () => {
@@ -89,12 +99,11 @@ describe("Given I am a user connected as Admin", () => {
        expect(bills.data.length).toBe(4)
     })
     test("fetches bills from an API and fails with 404 message error", async () => {
-      store.get.mockImplementationOnce(() =>
-        Promise.reject(new Error("Erreur 404"))
-      )
-      const html = BillsUI({ error: "Erreur 404" })
-      document.body.innerHTML = html
-      const message = await screen.getByText(/Erreur 404/)
+      const message = errorHandler('404')
+      expect(message).toBeTruthy()
+    })
+    test("fetches bills from an API and fails with 500 message error", async () => {
+      const message = errorHandler('500')
       expect(message).toBeTruthy()
     })
   })
