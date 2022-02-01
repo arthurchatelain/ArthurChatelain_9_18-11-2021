@@ -24,10 +24,10 @@ const rows = (data) => {
   if (data !== undefined && data !== null && data !== bills) {
     data.map(bill => {
       (bill.date !== undefined && bill.date !== null) ? bill.date = formatDate(bill.date.replaceAll('-', ' ')) : data = data.filter((c, i)=> i !== data.indexOf(bill))
-  })
-  data.sort((a, b) => a.date > b.date ? -1 : 1)
-  return (data && data.length) ? data.map(bill => row(bill)).join("") : ""
+    })
+    data.sort((a, b) => a.date > b.date ? -1 : 1)
   }
+  return (data && data.length) ? data.map(bill => row(bill)).join("") : ""
 }
 
 export default ({ data: bills, loading, error }) => {
